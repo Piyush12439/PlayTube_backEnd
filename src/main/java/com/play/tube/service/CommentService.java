@@ -2,6 +2,8 @@ package com.play.tube.service;
 
 
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,10 @@ public class CommentService {
 		
 	}
 
-	public Comment updateComment(Integer id,String comment) {
+	public Comment updateComment(Integer id,String comment,String userId) {
 		Comment previousComment=commentDao.getById(id);
-		Comment comment2=new Comment(comment);
+		Date date=new Date();
+		Comment comment2=new Comment(comment,userId,date);
 		previousComment.getReply().add(comment2);
 		
 		Comment comment3=commentDao.save(previousComment);

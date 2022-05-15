@@ -18,15 +18,14 @@ import com.play.tube.entity.Comment;
 import com.play.tube.entity.Item;
 import com.play.tube.entity.Likes_Unlikes;
 
+import io.swagger.models.auth.In;
+
 @Service
 public class ItemService {
 
 	@Autowired
 	private ItemDao dao;
-	@Autowired
-	private UserDao dao2;
-	@Autowired
-	private Likes_dislikeService dislikeService;
+	
 
 	public Item addItem( Item item1) {
 
@@ -54,7 +53,7 @@ public class ItemService {
 		
 	}
 	
-	public void updateLikeDislike(String likes,String email,Integer VideoId) {
+	public String updateLikeDislike(String likes,String email,Integer VideoId) {
 		
 		Item itemsLike=dao.getById(VideoId);
 		Integer flag=0;
@@ -70,7 +69,17 @@ public class ItemService {
 			itemsLike.getLikes().add(likes_Unlikes);
 		}
 		dao.save(itemsLike);
-		
+		Integer like=0;
+		Integer dislike=0;
+		List<Likes_Unlikes> likes_Unlikes=itemsLike.getLikes();
+		for (Likes_Unlikes likes_Unlikes2 : likes_Unlikes) {
+			if(likes_Unlikes2.Likes_Unlikes.equals("1")) {
+				 like+=1;
+			}else if(likes_Unlikes2.Likes_Unlikes.equals("0")) {
+				dislike+=1;
+			}
+		}
+		return like+"-"+dislike;
 	
 	}
 public String checkStatusLikeDislike(String email,Integer VideoId) {
@@ -100,6 +109,13 @@ public  void deleteLikeDislike(String email,Integer VideoId) {
 	dao.save(itemsLike);
 	
 
+}
+
+public Integer addViews(Integer Id) {
+	Item item= dao.getById(Id);
+	item.setViews(item.getViews()+1);
+	dao.save(item);
+	return item.getViews();
 }
 
 	

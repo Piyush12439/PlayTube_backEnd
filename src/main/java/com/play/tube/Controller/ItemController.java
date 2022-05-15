@@ -67,12 +67,13 @@ public class ItemController {
 		System.out.println(ispublic);
 		item.setIsPublicVedios(ispublic);
 		item.setDiscription(discription);
+		item.setViews(0);
 		//		item.setTag(tags);
 		item.setUplodeDate(UplodeDate);
 		item.setThumbnail(thumbnail.getBytes());
 
 		item.setUser(dao2.getById(UserId));
-		
+
 
 		service.addItem(item);
 		return 1;
@@ -123,7 +124,7 @@ public class ItemController {
 		return ResponseEntity.ok()
 				.body("Added");
 	}
-	
+
 	@GetMapping("/homeVideo/{id}")
 	public ResponseEntity<VideoPageDto> GetVideoById(@PathVariable Integer id){
 
@@ -131,15 +132,15 @@ public class ItemController {
 		return ResponseEntity.ok()
 				.body(res);
 	}
-	
+
 	@PostMapping("/UpdateLikes")
-	public  void UpdateLikes(@RequestParam("id") Integer id,@RequestParam("UserEmail") String Useremail,
+	public  String UpdateLikes(@RequestParam("id") Integer id,@RequestParam("UserEmail") String Useremail,
 			@RequestParam("LikesStatus") String LikesStatus) {
-	 service.updateLikeDislike(LikesStatus, Useremail, id);
-		
-				
+		String likes= service.updateLikeDislike(LikesStatus, Useremail, id);
+System.out.println(likes);
+		return likes;
 	}
-	
+
 	@GetMapping("/likeStatus/{id}/{UserEmail}")
 	public ResponseEntity<String> GetVideoById(@PathVariable Integer id,
 			@PathVariable String UserEmail){
@@ -148,13 +149,20 @@ public class ItemController {
 		return ResponseEntity.ok()
 				.body(status);
 	}
-	
+
 	@GetMapping("/deletelike/{id}/{UserEmail}")
 	public void deletelikeById(@PathVariable Integer id,
 			@PathVariable String UserEmail){
 
 		service.deleteLikeDislike( UserEmail, id);
-		
+
 	}
 
+	@GetMapping("/addViews/{id}")
+	public Integer deletelikeById(@PathVariable Integer id
+			){
+
+		Integer views= service.addViews(  id);
+		return views;
+	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.play.tube.entity.Comment;
@@ -43,10 +44,10 @@ public class CommentController {
 		return new ResponseEntity<List<Comment>>(comments,HttpStatus.OK);
 	}
 	
-	@GetMapping("/addreply/{id}")
-	public  ResponseEntity<Comment> addreply(@PathVariable Integer id,@PathVariable String comment) {
+	@PostMapping("/addreply/{id}")
+	public  ResponseEntity<Comment> addreply(@PathVariable Integer id,@RequestParam("comment") String comment,@RequestParam("userId") String userId) {
 		
-		Comment comments=commentService.updateComment(id,comment);
+		Comment comments=commentService.updateComment(id,comment,userId);
 		
 		return new ResponseEntity<Comment>(comments,HttpStatus.OK);
 	}
