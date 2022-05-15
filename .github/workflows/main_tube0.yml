@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'tube0'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_612708F5AC8B48A98D6CCFF378454B6A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2EFF3C15EF9B4056A3C7B3A3E96B0B3D }}
           package: '*.jar'
