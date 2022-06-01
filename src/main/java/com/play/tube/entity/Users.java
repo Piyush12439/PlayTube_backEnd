@@ -11,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -42,12 +44,25 @@ public class Users {
 	private String address;
 	private String city;
 	private Long pin;
+	private Long subscriber=(long) 0;
 	private String state;
 	private String password;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="likes")
 	List<Item> item=new ArrayList<Item>();
+	
+	@OneToOne(mappedBy = "users")
+	private SavedItems saveditems;
+	
+	@ManyToMany
+	@JoinColumn(name="Items")
+	List<Item> HistoryItem=new ArrayList<Item>();
+	
+	@ManyToMany
+	@JoinColumn(name="Subscribed")
+	List<Users> Subscribed=new ArrayList<Users>(); 
+	
 	@Lob
 	private byte[] profilePhoto;
 	public Users(String fname, String lname, String email, Long mobile, String gender, Date dob, String address,

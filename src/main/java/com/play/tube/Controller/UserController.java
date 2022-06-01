@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.play.tube.Dto.ItemSendDTO;
 import com.play.tube.Dto.loginIconDto;
 import com.play.tube.entity.Item;
 import com.play.tube.entity.Photo;
@@ -83,6 +84,50 @@ public class UserController {
 
 		return new ResponseEntity<Users>(users,HttpStatus.OK);
 	}
+	
+	@GetMapping("/saveHistory/{userid}/{itemId}")
+	public  ResponseEntity<String> saveHistory(@PathVariable String userid ,@PathVariable Integer itemId ) {
+		userService.SaveHistory(userid, itemId);
+		return new ResponseEntity<String>("Saved",HttpStatus.OK);
+	}
+	
+	@GetMapping("/getHistory/{userid}")
+	public  ResponseEntity<List<ItemSendDTO>> getHistory(@PathVariable String userid  ) {
+		List<ItemSendDTO> historyitem= userService.getHistory(userid);
+		return new ResponseEntity<List<ItemSendDTO>>(historyitem,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/deleteHistory/{userid}/{itemId}")
+	public  ResponseEntity<String> deleteHistory(@PathVariable String userid ,@PathVariable Integer itemId ) {
+		userService.deleteOneHistoryItem(userid, itemId);
+		return new ResponseEntity<String>(itemId+" Deleted",HttpStatus.OK);
+	}
+	
+	@GetMapping("/clearHistory/{userid}")
+	public  ResponseEntity<String> clearHistory(@PathVariable String userid ) {
+		userService.clearHistory(userid);
+		return new ResponseEntity<String>(userid+" history cleared",HttpStatus.OK);
+	}
+	
+	@GetMapping("/subscribe/{userid}/{channelId}")
+	public  ResponseEntity<Long> subscribe(@PathVariable String userid,@PathVariable String channelId ) {
+		Long SubscribersNo=  userService.subscribe(userid, channelId);
+		return new ResponseEntity<Long>(SubscribersNo,HttpStatus.OK);
+	}
+	
+	@GetMapping("/unsubscribe/{userid}/{channelId}")
+	public  ResponseEntity<Long> unsubscribe(@PathVariable String userid,@PathVariable String channelId ) {
+		Long SubscribersNo=  userService.UnSubscribe(userid, channelId);
+		return new ResponseEntity<Long>(SubscribersNo,HttpStatus.OK);
+	}
+	
+	@GetMapping("/IsSubscribe/{userid}/{channelId}")
+	public  ResponseEntity<Integer> IsSbscribe(@PathVariable String userid,@PathVariable String channelId ) {
+		Integer Status=  userService.IsSubscribe(userid, channelId);
+		return new ResponseEntity<Integer>(Status,HttpStatus.OK);
+	}
+	
 	
 //	@PostMapping("/uploadFiles")
 //	public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files,@RequestParam("id") String id) {

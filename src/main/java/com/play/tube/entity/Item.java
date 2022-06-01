@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -40,12 +41,17 @@ public class Item {
 	private Integer views;
 	private Date UplodeDate;
 	
+	@ManyToMany(mappedBy = "items")
+	
+	List<SavedItems> saveItems=new ArrayList<SavedItems>();
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="likes")
 	List<Likes_Unlikes> likes=new ArrayList<Likes_Unlikes>();
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="likes")
+	@JoinColumn(name="Comments")
+	
 	List<Comment> comment=new ArrayList<Comment>();
 	
 	@OneToMany(cascade = CascadeType.ALL)

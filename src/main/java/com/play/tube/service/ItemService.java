@@ -141,6 +141,7 @@ public Integer addViews(Integer Id) {
 		videoPageDto.setDiscription(items.getDiscription());
 		videoPageDto.setViews(items.getViews());
 		videoPageDto.setUplodeDate(items.getUplodeDate());
+//		videoPageDto.setUserId();
 		Integer like=0;
 		Integer dislike=0;
 		List<Likes_Unlikes> likes_Unlikes=items.getLikes();

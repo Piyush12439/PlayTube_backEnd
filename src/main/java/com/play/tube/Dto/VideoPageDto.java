@@ -34,7 +34,7 @@ public class VideoPageDto {
 	private String UserId;
 	private Integer views;
 	private Date UplodeDate;
-	
+//	private String User;
 	private Integer likes;
 	private Integer dislikes;
 	

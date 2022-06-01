@@ -30,6 +30,7 @@ public class ItemSendDTO {
 	private String user;
 	private Integer views;
 	private Date days;
+	private String userId;
 	@Lob
 	private byte[] photo;
 	@Lob
